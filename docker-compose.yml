@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  global:
+    driver: overlay
+
+services:
+  nginx-router:
+    image: raykrueger/nginx-router
+    ports:
+      - '80:80'
+    deploy:
+      mode: global
+    networks:
+      - global
+
+  nginx-sample:
+    image: raykrueger/nginx-sample
+    deploy:
+      replicas: 3
+    networks:
+      global:
+        aliases:
+          - sample
