@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample
+  labels:
+    app: nginx-sample
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: nginx-sample
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-sample
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx-sample
+    spec:
+      containers:
+      - name: nginx-sample
+        image: raykrueger/nginx-sample
+        ports:
+        - containerPort: 80
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: router
+  labels:
+    app: nginx-router
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: nginx-router
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-router
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx-router
+    spec:
+      containers:
+      - name: nginx-router
+        image: raykrueger/nginx-router
+        ports:
+        - containerPort: 80
+
