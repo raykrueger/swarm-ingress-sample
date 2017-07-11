@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: nginx-router
-        image: raykrueger/nginx-router
+        image: raykrueger/nginx-router:kubernetes
         ports:
         - containerPort: 80
 
